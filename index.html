@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFG Workshop — конфиги</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">⚙️ CFG Workshop</div>
+  <div class="topbar-actions">
+    <span id="conn-status" class="conn-status"></span>
+    <button id="btn-refresh" class="btn ghost">Обновить</button>
+    <button id="btn-settings" class="btn ghost">Настройки</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="card">
+    <div class="list-head">
+      <h2>Конфиги</h2>
+      <span id="file-count" class="muted"></span>
+    </div>
+    <p class="hint">Файлы подтягиваются автоматически из папки <code>configs</code> в репозитории. Чтобы добавить конфиг — просто закиньте файл в эту папку на GitHub и нажмите «Обновить».</p>
+    <div id="file-list" class="file-list"></div>
+    <div id="empty-state" class="empty-state hidden"></div>
+  </section>
+
+</main>
+
+<!-- Модалка настроек -->
+<div id="settings-modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Настройки</h2>
+    <p class="hint">Данные репозитория хранятся в вашем браузере (localStorage). Токен не нужен.</p>
+    <label>Владелец (GitHub-юзер)</label>
+    <input type="text" id="set-owner" class="text-input" placeholder="username">
+    <label>Репозиторий</label>
+    <input type="text" id="set-repo" class="text-input" placeholder="repo-name">
+    <label>Ветка</label>
+    <input type="text" id="set-branch" class="text-input" placeholder="main">
+    <label>Папка с конфигами</label>
+    <input type="text" id="set-folder" class="text-input" placeholder="configs">
+    <div class="modal-actions">
+      <button id="btn-save" class="btn primary">Сохранить</button>
+      <button id="btn-cancel" class="btn ghost">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
