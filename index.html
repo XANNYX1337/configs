@@ -12,6 +12,7 @@
   <div class="logo">⚙️ CFG Workshop</div>
   <div class="topbar-actions">
     <span id="conn-status" class="conn-status"></span>
+    <button id="btn-token" class="btn ghost">🔑 Токен</button>
     <button id="btn-refresh" class="btn ghost">Обновить</button>
   </div>
 </header>
@@ -40,6 +41,20 @@
   </section>
 
 </main>
+
+<!-- Модалка токена -->
+<div id="token-modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Токен для загрузок</h2>
+    <p class="hint">Вставляется один раз и хранится в вашем браузере (localStorage), в репозиторий не попадает. Нужен только для кнопки «Загрузить».</p>
+    <label>Fine-grained токен GitHub (Contents: Read and write на репозиторий configs)</label>
+    <input type="password" id="set-token" class="text-input" placeholder="github_pat_...">
+    <div class="modal-actions">
+      <button id="btn-token-save" class="btn primary">Сохранить</button>
+      <button id="btn-token-cancel" class="btn ghost">Отмена</button>
+    </div>
+  </div>
+</div>
 
 <div id="toast" class="toast hidden"></div>
 

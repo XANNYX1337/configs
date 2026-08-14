@@ -7,11 +7,13 @@
     repo: "configs",
     branch: "main",
     folder: "configs",
-    // Токен GitHub для загрузки конфигов:
-    // GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens
-    // Права: Contents Read and write, доступ только к репозиторию configs
+    // Токен вводится на сайте (кнопка «🔑 Токен») и хранится в браузере,
+    // чтобы не светить его в коде страницы.
     token: ""
   };
+
+  const TOKEN_LS_KEY = "cfg-token";
+  let token = localStorage.getItem(TOKEN_LS_KEY) || CONFIG.token;
 
   const META_FILE = "configs.json";
 
@@ -37,7 +39,7 @@
 
   function api(path, opts) {
     const headers = { Accept: "application/vnd.github+json" };
-    if (CONFIG.token) headers.Authorization = "Bearer " + CONFIG.token;
+    if (token) headers.Authorization = "Bearer " + token;
     return fetch("https://api.github.com" + path, Object.assign({ headers }, opts));
   }
 
@@ -182,7 +184,7 @@
   }
 
   async function uploadFiles(files, desc) {
-    if (!CONFIG.token) { toast("Токен не настроен — загрузка отключена", "err"); return; }
+    if (!token) { toast("Токен не настроен — нажмите «🔑 Токен»", "err"); return; }
     let ok = 0;
     const box = $("upload-progress");
     box.classList.remove("hidden");
@@ -237,6 +239,19 @@
     $("file-input").value = "";
     $("upload-desc").value = "";
     uploadFiles(Array.from(files), desc);
+  });
+
+  $("btn-token").addEventListener("click", () => {
+    $("set-token").value = token || "";
+    $("token-modal").classList.remove("hidden");
+  });
+  $("btn-token-cancel").addEventListener("click", () => $("token-modal").classList.add("hidden"));
+  $("btn-token-save").addEventListener("click", () => {
+    token = $("set-token").value.trim();
+    if (token) localStorage.setItem(TOKEN_LS_KEY, token);
+    else localStorage.removeItem(TOKEN_LS_KEY);
+    $("token-modal").classList.add("hidden");
+    toast("Токен сохранён", "ok");
   });
 
   $("btn-refresh").addEventListener("click", refresh);
