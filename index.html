@@ -12,7 +12,6 @@
   <div class="logo">⚙️ CFG Workshop</div>
   <div class="topbar-actions">
     <span id="conn-status" class="conn-status"></span>
-    <button id="btn-token" class="btn ghost">🔑 Токен</button>
     <button id="btn-refresh" class="btn ghost">Обновить</button>
   </div>
 </header>
@@ -20,44 +19,19 @@
 <main class="container">
 
   <section class="card">
-    <h2>Добавить конфиг</h2>
-    <p class="hint">Загрузите файл с расширением <code>.cfg</code> и добавьте описание.</p>
-    <div class="upload-row">
-      <input type="file" id="file-input" multiple accept=".cfg" class="file-input">
-      <input type="text" id="upload-desc" maxlength="120" placeholder="Описание (игра / стиль / автор)" class="text-input">
-      <button id="btn-upload" class="btn primary">Загрузить</button>
-    </div>
-    <div id="upload-progress" class="upload-progress hidden"></div>
-  </section>
-
-  <section class="card">
     <div class="list-head">
       <h2>Конфиги</h2>
       <span id="file-count" class="muted"></span>
     </div>
-    <p class="hint">Файлы подтягиваются автоматически из папки <code>configs</code> в репозитории. Загруженные конфиги попадают туда сразу.</p>
+    <p class="hint">Файлы подтягиваются автоматически из папки <code>configs</code> в репозитории. Новые конфиги появляются после нажатия «Обновить».</p>
     <div id="file-list" class="file-list"></div>
     <div id="empty-state" class="empty-state hidden"></div>
   </section>
 
 </main>
 
-<!-- Модалка токена -->
-<div id="token-modal" class="modal hidden">
-  <div class="modal-content">
-    <h2>Токен для загрузок</h2>
-    <p class="hint">Вставляется один раз и хранится в вашем браузере (localStorage), в репозиторий не попадает. Нужен только для кнопки «Загрузить».</p>
-    <label>Fine-grained токен GitHub (Contents: Read and write на репозиторий configs)</label>
-    <input type="password" id="set-token" class="text-input" placeholder="github_pat_...">
-    <div class="modal-actions">
-      <button id="btn-token-save" class="btn primary">Сохранить</button>
-      <button id="btn-token-cancel" class="btn ghost">Отмена</button>
-    </div>
-  </div>
-</div>
-
 <div id="toast" class="toast hidden"></div>
 
-<script src="app.js?v=3"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
