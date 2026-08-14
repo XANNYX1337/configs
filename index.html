@@ -4,50 +4,64 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hot Workshop Configs</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,900" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 
-<div class="bg-glow"></div>
-
-<header class="topbar">
-  <div class="brand">
-    <div class="logo">Hot Workshop <span>Configs</span></div>
-    <div class="logo-sub">For Neverfair</div>
-  </div>
-  <div class="topbar-actions">
-    <span id="conn-status" class="conn-status"></span>
-    <button id="btn-refresh" class="btn ghost" title="Обновить список">⟳</button>
+<header class="p-header">
+  <div class="p-header-inner">
+    <a class="logo">Hot Workshop <span>Configs</span></a>
+    <div class="p-nav-opposite">
+      <span id="conn-status" class="conn-status"></span>
+      <button class="nav-btn primary" id="btn-refresh">Обновить</button>
+    </div>
   </div>
 </header>
 
-<main class="container">
+<div class="gs-divider"></div>
 
-  <section class="card list-section">
-    <div class="list-head">
-      <h2>Конфиги</h2>
-      <span id="file-count" class="muted"></span>
+<div class="p-sectionLinks">
+  <div class="p-sectionLinks-inner">
+    <a href="https://github.com/XANNYX1337/configs" target="_blank" rel="noopener">Репозиторий</a>
+    <a href="#">Конфиги</a>
+    <a href="#">For Neverfair</a>
+  </div>
+</div>
+
+<div class="p-body">
+
+  <ul class="p-breadcrumbs">
+    <li class="first">Hot Workshop Configs</li>
+    <li>Форум конфигов</li>
+  </ul>
+
+  <div class="p-title">
+    <h1 class="p-title-value">Конфиги</h1>
+    <div class="p-title-pageAction">
+      <span class="button" id="file-count">0 файлов</span>
     </div>
-    <div class="search-row">
-      <input type="search" id="search-input" class="text-input" placeholder="Поиск по названию...">
+  </div>
+
+  <div class="block">
+    <div class="block-header">Хранилище конфигов</div>
+    <div class="block-container">
+      <div class="search-box">
+        <input type="search" id="search-input" placeholder="Поиск по названию...">
+      </div>
+      <div id="file-list"></div>
+      <div id="empty-state" class="empty hidden"></div>
     </div>
-    <div id="file-list" class="file-list"></div>
-    <div id="empty-state" class="empty-state hidden"></div>
-  </section>
+  </div>
 
-  <footer class="footer">
-    <span>Hot Workshop Configs</span>
-    <span class="dot">·</span>
-    <span>For Neverfair</span>
-  </footer>
+  <div class="footer">
+    Hot Workshop Configs · For Neverfair · Не размещайте файлы, нарушающие правила
+  </div>
 
-</main>
+</div>
 
 <div id="toast" class="toast hidden"></div>
 
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

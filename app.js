@@ -14,6 +14,7 @@
   const emptyStateEl = $("empty-state");
   const connStatusEl = $("conn-status");
   const searchInput = $("search-input");
+  const countEl = $("file-count");
 
   let filesCache = [];
 
@@ -69,9 +70,10 @@
   function renderList(files) {
     fileListEl.innerHTML = "";
     if (!files.length) {
-      $("file-count").textContent = "0 файлов";
       emptyStateEl.classList.remove("hidden");
-      emptyStateEl.textContent = searchInput.value ? "Ничего не найдено по запросу «" + searchInput.value + "»" : "В папке пока нет файлов. Конфиги появятся здесь после добавления в репозиторий.";
+      emptyStateEl.textContent = searchInput.value
+        ? "Ничего не найдено по запросу «" + searchInput.value + "»"
+        : "В папке пока нет файлов.";
       return;
     }
     emptyStateEl.classList.add("hidden");
@@ -82,29 +84,30 @@
     for (const f of files) {
       const name = f.name.includes("/") ? f.name.slice(f.name.lastIndexOf("/") + 1) : f.name;
       const folder = f.name.includes("/") ? f.name.slice(0, f.name.lastIndexOf("/")) + "/" : "";
-      const card = document.createElement("div");
-      card.className = "file-card";
-      card.innerHTML = `
-        <div class="file-icon"></div>
-        <div class="file-meta">
-          <div class="file-name"></div>
-          <div class="file-info"></div>
+      const row = document.createElement("div");
+      row.className = "thread-row";
+      row.innerHTML = `
+        <div class="thread-icon"></div>
+        <div class="thread-main">
+          <div class="thread-title"><a class="dl-link" href="#" target="_blank" rel="noopener"></a></div>
+          <div class="thread-meta"></div>
         </div>
-        <div class="file-actions">
-          <a class="btn small ghost" target="_blank" rel="noopener">Скачать</a>
-          <button class="btn small ghost copy-link" title="Скопировать ссылку">Ссылка</button>
+        <div class="thread-actions">
+          <a class="button" href="#" target="_blank" rel="noopener">Скачать</a>
+          <button class="button copy-link" title="Скопировать ссылку">Ссылка</button>
         </div>`;
-      card.querySelector(".file-icon").textContent = iconFor(f.name);
-      card.querySelector(".file-name").textContent = name;
-      card.querySelector(".file-info").textContent = [folder, humanSize(f.size)].filter(Boolean).join(" · ");
+      row.querySelector(".thread-icon").textContent = iconFor(f.name);
       const url = raw + f.name.split("/").map(encodeURIComponent).join("/");
-      card.querySelector("a").href = url;
-      card.querySelector(".copy-link").addEventListener("click", () => {
+      row.querySelector(".dl-link").textContent = name;
+      row.querySelector(".dl-link").href = url;
+      row.querySelector("a.button").href = url;
+      row.querySelector(".thread-meta").textContent = [folder, humanSize(f.size)].filter(Boolean).join(" · ");
+      row.querySelector(".copy-link").addEventListener("click", () => {
         navigator.clipboard.writeText(url)
           .then(() => toast("Ссылка скопирована", "ok"))
           .catch(() => toast("Не удалось скопировать", "err"));
       });
-      frag.appendChild(card);
+      frag.appendChild(row);
     }
     fileListEl.appendChild(frag);
   }
@@ -114,24 +117,24 @@
     const filtered = q
       ? filesCache.filter((f) => f.name.toLowerCase().includes(q))
       : filesCache;
-    $("file-count").textContent = filtered.length + " файлов";
+    countEl.textContent = filtered.length + " файлов";
     renderList(filtered);
   }
 
   async function refresh() {
-    connStatusEl.textContent = "Обновление...";
+    connStatusEl.textContent = "Загрузка…";
     connStatusEl.className = "conn-status";
     try {
       filesCache = await listFiles();
-      connStatusEl.textContent = "Подключено";
+      connStatusEl.textContent = "Онлайн · " + filesCache.length + " cfg";
       connStatusEl.className = "conn-status ok";
       applyFilter();
     } catch (e) {
-      connStatusEl.textContent = "Ошибка";
+      connStatusEl.textContent = "Ошибка: " + e.message;
       connStatusEl.className = "conn-status err";
       fileListEl.innerHTML = "";
       emptyStateEl.classList.remove("hidden");
-      emptyStateEl.textContent = "Ошибка загрузки: " + e.message;
+      emptyStateEl.textContent = "Ошибка загрузки";
       toast("Не удалось загрузить список", "err");
     }
   }
